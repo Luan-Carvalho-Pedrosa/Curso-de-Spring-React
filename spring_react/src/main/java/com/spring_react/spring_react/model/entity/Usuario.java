@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
@@ -27,14 +28,16 @@ public class Usuario {
      @Column(name = "senha")
     private String senha;
 
+    
+    public Usuario() {
+    }
+
+
     public Usuario(String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
         this.senha = senha;
     }
-
-    
-
 
     
     

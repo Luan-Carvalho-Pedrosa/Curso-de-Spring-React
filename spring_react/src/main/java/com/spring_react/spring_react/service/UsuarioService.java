@@ -6,7 +6,7 @@ public interface UsuarioService {
 
     Usuario autenticar(String email, String senha);
 
-    Usuario cadastrar(Usuario usuario);
+    Usuario salvarUsuario(Usuario usuario);
 
     void validarEmail(String email);
     

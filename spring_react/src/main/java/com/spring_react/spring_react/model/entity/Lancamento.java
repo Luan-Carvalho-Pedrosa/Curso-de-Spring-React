@@ -53,12 +53,14 @@ public class Lancamento {
     @Enumerated(value = EnumType.STRING)
     private StatusLancamento status;
 
+    @Column(name = "descricao")
+    private String descricao;
 
     
 
 
     public Lancamento(Long mes, Long ano, Usuario usuario, BigDecimal valor, LocalDate dataCadastro,
-            TipoLancamento tipo, StatusLancamento status) {
+            TipoLancamento tipo, StatusLancamento status, String descricao) {
         this.mes = mes;
         this.ano = ano;
         this.usuario = usuario;
@@ -66,6 +68,7 @@ public class Lancamento {
         this.dataCadastro = dataCadastro;
         this.tipo = tipo;
         this.status = status;
+        this.descricao = descricao;
     }
 
 
@@ -147,9 +150,21 @@ public class Lancamento {
     public void setStatus(StatusLancamento status) {
         this.status = status;
     }
+    
+    
 
 
-    @Override
+    public String getDescricao() {
+		return descricao;
+	}
+
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+
+	@Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;

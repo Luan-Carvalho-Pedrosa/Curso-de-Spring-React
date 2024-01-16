@@ -1,8 +1,12 @@
 package com.spring_react.spring_react.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.spring_react.spring_react.exceptions.ErroAutenticacao;
 import com.spring_react.spring_react.exceptions.RegraNegocioException;
 import com.spring_react.spring_react.model.entity.Usuario;
 import com.spring_react.spring_react.model.repository.UsuarioRepository;
@@ -11,34 +15,52 @@ import com.spring_react.spring_react.service.UsuarioService;
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
-    private UsuarioRepository usuarioRepository;
-
     @Autowired
+    private UsuarioRepository usuarioRepository;
+    
+    
+
     public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
-        super();
-        this.usuarioRepository = usuarioRepository;
-    }
+		super();
+		this.usuarioRepository = usuarioRepository;
+	}
 
-    @Override
+	@Override
     public Usuario autenticar(String email, String senha) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'autenticar'");
+    	Optional<Usuario> usuario = this.usuarioRepository.findByEmail(email);
+    	
+    	if(!usuario.isPresent()) {
+    		throw new ErroAutenticacao("Usuario não encontrado para o email informado.");
+    	}
+    	
+    	if(!usuario.get().getSenha().equals(senha)) {
+    		throw new ErroAutenticacao("Senha invalida.");
+
+    	}
+    	
+    	return usuario.get();
     }
 
     @Override
-    public Usuario cadastrar(Usuario usuario) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cadastrar'");
+    @Transactional
+    public Usuario salvarUsuario(Usuario usuario) {
+    	validarEmail(usuario.getEmail());
+    	return this.usuarioRepository.save(usuario);
     }
 
     @Override
     public void validarEmail(String email) {
-        boolean existe = this.usuarioRepository.existisByEmail(email);
+    	
+        boolean existe = this.validarEmailBoolean(email);
         if(existe){
             throw new RegraNegocioException("Email já existe");
         }
-
-
+        
+    }
+    
+    public boolean validarEmailBoolean(String email) {
+    	return this.usuarioRepository.findByEmail(email).isPresent();
+    	
     }
     
 }
