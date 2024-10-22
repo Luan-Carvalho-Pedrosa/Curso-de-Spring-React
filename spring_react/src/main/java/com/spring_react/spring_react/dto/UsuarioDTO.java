@@ -1,18 +1,16 @@
 package com.spring_react.spring_react.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
+@AllArgsConstructor
 public class UsuarioDTO {
 	
 	private String nome;
 	private String email;
 	private String senha;
 	
-	
-	public UsuarioDTO(String nome, String email, String senha) {
-		super();
-		this.nome = nome;
-		this.email = email;
-		this.senha = senha;
-	}
 	public String getNome() {
 		return nome;
 	}

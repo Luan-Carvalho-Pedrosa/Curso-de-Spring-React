@@ -1,5 +1,6 @@
 package com.spring_react.spring_react.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +63,17 @@ public class UsuarioServiceImpl implements UsuarioService {
     	return this.usuarioRepository.findByEmail(email).isPresent();
     	
     }
+
+	@Override
+	public Usuario obterPorId(Long id) {
+		// TODO Auto-generated method stub
+		return this.usuarioRepository.findById(id).get();
+	}
+
+	@Override
+	public List<Usuario> listarUsuarios() {
+		// TODO Auto-generated method stub
+		return this.usuarioRepository.findAll();
+	}
     
 }

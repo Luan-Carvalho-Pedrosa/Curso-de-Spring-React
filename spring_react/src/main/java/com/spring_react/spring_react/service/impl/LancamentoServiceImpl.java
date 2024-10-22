@@ -3,6 +3,7 @@ package com.spring_react.spring_react.service.impl;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.spring_react.spring_react.exceptions.RegraNegocioException;
 import com.spring_react.spring_react.model.entity.Lancamento;
 import com.spring_react.spring_react.model.entity.StatusLancamento;
+import com.spring_react.spring_react.model.entity.TipoLancamento;
 import com.spring_react.spring_react.model.repository.LancamentoRepository;
 import com.spring_react.spring_react.service.LancamentoService;
 
@@ -28,7 +30,6 @@ public class LancamentoServiceImpl implements LancamentoService {
 	public Lancamento salvar(Lancamento lancamento) {
 		// TODO Auto-generated method stub
 		this.validar(lancamento);
-		lancamento.setStatus(StatusLancamento.PENDENTE);
 		return this.repository.save(lancamento);
 	}
 
@@ -52,8 +53,8 @@ public class LancamentoServiceImpl implements LancamentoService {
 
 	@Override
 	public List<Lancamento> buscar(Lancamento lancamentoFiltro) {
-		// TODO Auto-generated method stub
-		Example example = Example.of(lancamentoFiltro,
+		
+		Example<Lancamento> example = Example.of(lancamentoFiltro,
 				ExampleMatcher.matching()
 				.withIgnoreCase()
 				.withStringMatcher(StringMatcher.CONTAINING));
@@ -99,5 +100,29 @@ public class LancamentoServiceImpl implements LancamentoService {
 		}
 		
 	}
+
+	@Override
+	public Optional<Lancamento> obterPorId(Long id) {
+		// TODO Auto-generated method stub
+		return repository.findById(id);
+	}
+
+	@Override
+	public BigDecimal obterSaldoPorUsuario(Long id) {
+		BigDecimal receitas = this.repository.obterSaldoReceitaPorUsuario(id);
+		BigDecimal despesas = this.repository.obterSaldoDespesaPorUsuario(id);
+
+		if(receitas == null) {
+			receitas = BigDecimal.ZERO;
+		}
+		
+		if(despesas == null) {
+			despesas = BigDecimal.ZERO;
+		}
+		return receitas.subtract(despesas);
+		
+	}
+	
+	
 
 }

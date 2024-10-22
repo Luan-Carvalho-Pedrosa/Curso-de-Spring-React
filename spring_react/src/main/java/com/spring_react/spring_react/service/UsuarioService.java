@@ -1,5 +1,7 @@
 package com.spring_react.spring_react.service;
 
+import java.util.List;
+
 import com.spring_react.spring_react.model.entity.Usuario;
 
 public interface UsuarioService {
@@ -8,6 +10,10 @@ public interface UsuarioService {
 
     Usuario salvarUsuario(Usuario usuario);
 
+    List<Usuario> listarUsuarios();
+
     void validarEmail(String email);
+    
+    Usuario obterPorId(Long id);
     
 }
