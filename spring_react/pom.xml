@@ -11,7 +11,7 @@
 	<groupId>com.spring_react</groupId>
 	<artifactId>spring_react</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>spring_react</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
