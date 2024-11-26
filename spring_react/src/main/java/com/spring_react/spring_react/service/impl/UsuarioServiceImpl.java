@@ -47,7 +47,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		
 		boolean senhasBatem  = encoder.matches(senha, user.getSenha());
     	
-		if (!senhasBatem) {
+		if (!senha.equals(user.getSenha())) {
 			throw new ErroAutenticacao("Senha invalida.");
 
 		}
@@ -62,7 +62,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     public Usuario salvarUsuario(Usuario usuario) {
 		validarEmail(usuario.getEmail());
-		this.criptografarSenha(usuario);
+		//this.criptografarSenha(usuario);
     	return this.usuarioRepository.save(usuario);
     }
 
